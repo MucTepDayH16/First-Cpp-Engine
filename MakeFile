@@ -10,6 +10,8 @@ push: program
 	$(G) add .
 	$(G) commit -m "commit"
 	$(G) push
+	MucTeapDayH16
+	79031201999drozhzh
 
 program: main.o execute.o state.o graphic.o input.o input_listener.o entity.o
 	$(GCC) main.o execute.o state.o graphic.o input.o input_listener.o entity.o -o $(NAME) $(SDL)
