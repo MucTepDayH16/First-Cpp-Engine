@@ -2,8 +2,18 @@ SDL=`sdl2-config --cflags --libs` -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
 GCC=g++
 FLAGS=-c -Wall
 NAME=Simulator
+G=git
 
-all: program
+all: push
+
+push: commit
+	$(G) push
+
+commit: index
+	$(G) commit -m "commit"
+
+index: program
+	$(G) add .
 
 program: main.o execute.o state.o graphic.o input.o keylistener.o entity.o
 	$(GCC) main.o execute.o state.o graphic.o input.o keylistener.o entity.o -o $(NAME) $(SDL)
