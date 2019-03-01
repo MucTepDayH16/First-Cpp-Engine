@@ -6,14 +6,10 @@ G=git
 
 all: push
 
-push: commit
-	$(G) push
-
-commit: index
-	$(G) commit -m "commit"
-
-index: program
+push: program
 	$(G) add .
+	$(G) commit -m "commit"
+	$(G) push
 
 program: main.o execute.o state.o graphic.o input.o input_listener.o entity.o
 	$(GCC) main.o execute.o state.o graphic.o input.o input_listener.o entity.o -o $(NAME) $(SDL)
