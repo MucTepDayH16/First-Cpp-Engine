@@ -5,12 +5,13 @@
 
 class Input {
 public:
-    class KeyDownListener
+    class KeyListener
     {
     public:
         virtual void onKeyDown(const SDL_Keycode&);
+        virtual void onKeyUp(const SDL_Keycode&);
     };
-    static bool setOnKeyDownListener(SDL_Keycode, KeyDownListener*);
+    static bool setOnKeyListener(SDL_Keycode, KeyListener*);
 
     class QuitListener
     {
@@ -30,7 +31,7 @@ public:
 protected:
     static SDL_Event* EVENT;
 
-    static map<SDL_Keycode, KeyDownListener*>* ListenerMap;
+    static map<SDL_Keycode, KeyListener*>* ListenerMap;
     static QuitListener* Q;
     static set<SDL_Keycode>* KeyMap;
     static SDL_Point* MousePos;

@@ -27,6 +27,6 @@ Uint16 Execute::Run() {
         state = s;
     }
 
-    clog << exit << endl;
+    clog << "end" << endl;
     return exit;
 }

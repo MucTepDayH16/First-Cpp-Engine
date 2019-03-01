@@ -12,6 +12,8 @@ public:
     virtual bool Create();
 
     virtual bool Run();
+
+    class Start;
 };
 
 class Quit : public State {
@@ -21,23 +23,20 @@ public:
     bool Run() override;
 };
 
-class Start
-        : public
-        State,
-        Input::KeyDownListener,
-        Input::QuitListener
-{
+class Start : public State,
+        Input::KeyListener,
+        Input::QuitListener {
 protected:
     SDL_Point* Mouse;
 public:
     Start();
-    bool Create() override;
 
+    bool Create() override;
     bool Run() override;
 
-    void onKeyDown(const SDL_Keycode&) override;
-
-    void onQuit(const Uint16&) override;
+    void onKeyDown(const SDL_Keycode& Key) override;
+    void onKeyUp(const SDL_Keycode&) override;
+    void onQuit(const Uint16& code) override;
 };
 
 #endif
