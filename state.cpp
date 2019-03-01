@@ -54,7 +54,6 @@ void Start::onKeyDown(const SDL_Keycode& Key) {
         Entities->emplace(new Entity("res/M.png", 2, 2, Mouse->x, Mouse->y));
         break;
     case SDLK_n:
-        clog << Entities->size() << endl;
         break;
     }
 }

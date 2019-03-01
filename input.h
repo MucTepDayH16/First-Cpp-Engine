@@ -30,9 +30,9 @@ public:
 protected:
     static SDL_Event* EVENT;
 
-    static std::map<SDL_Keycode, KeyDownListener*>* ListenerMap;
+    static map<SDL_Keycode, KeyDownListener*>* ListenerMap;
     static QuitListener* Q;
-    static std::set<SDL_Keycode>* KeyMap;
+    static set<SDL_Keycode>* KeyMap;
     static SDL_Point* MousePos;
 };
 
