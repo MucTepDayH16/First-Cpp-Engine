@@ -1,13 +1,12 @@
 SDL=`sdl2-config --cflags --libs` -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
 GCC=g++
-FLAGS=-c -Wall
+FLAGS=-c -Wall -fopenmp
 NAME=Simulator
 G=git
 
 all: graphic.o input.o input_listener.o entity.o state.o start.o execute.o main.o
 	$(GCC) main.o execute.o state.o start.o graphic.o input.o input_listener.o entity.o -o $(NAME) $(SDL)
 	rm -f *.o *.gch
-	./$(NAME)
 
 main.o: mainheader.h main.cpp
 	$(GCC) $(FLAGS) mainheader.h main.cpp

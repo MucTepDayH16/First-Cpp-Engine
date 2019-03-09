@@ -27,6 +27,9 @@ public:
     static Uint8 isKeyPressed(const SDL_Keycode&);
     static SDL_Point* GetMousePos();
 
+    static Uint64* GetTimer();
+    static Uint64* GetDeltaTimer();
+
     static bool KillInput();
 protected:
     static SDL_Event* EVENT;
@@ -35,6 +38,8 @@ protected:
     static QuitListener* Q;
     static set<SDL_Keycode>* KeyMap;
     static SDL_Point* MousePos;
+    static Uint64 Timer;
+    static Uint64 Delta;
 };
 
 #endif

@@ -5,6 +5,8 @@ std::map<SDL_Keycode, Input::KeyListener*>* Input::ListenerMap(nullptr);
 Input::QuitListener* Input::Q(nullptr);
 std::set<SDL_Keycode>* Input::KeyMap(nullptr);
 SDL_Point* Input::MousePos(nullptr);
+Uint64 Input::Timer(0);
+Uint64 Input::Delta(0);
 
 bool Input::InitInput() {
   SDL_Init(SDL_INIT_EVENTS);
@@ -14,6 +16,8 @@ bool Input::InitInput() {
   KeyMap        = new std::set<SDL_Keycode>;
   MousePos      = new SDL_Point; MousePos->x = 0; MousePos->y = 0;
   Q             = nullptr;
+  Timer         = SDL_GetTicks();
+  Delta         = 0;
 
   while (SDL_PollEvent(EVENT)) {}
 
@@ -53,6 +57,9 @@ bool Input::Update() {
 
     }
   }
+
+  Delta = SDL_GetTicks() - Timer;
+  Timer += Delta;
   return true;
 }
 
@@ -62,6 +69,14 @@ Uint8 Input::isKeyPressed(const SDL_Keycode& Key) {
 
 SDL_Point* Input::GetMousePos() {
   return MousePos;
+}
+
+Uint64* Input::GetTimer() {
+  return &Timer;
+}
+
+Uint64* Input::GetDeltaTimer() {
+  return &Delta;
 }
 
 bool Input::KillInput() {

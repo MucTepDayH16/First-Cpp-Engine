@@ -24,4 +24,15 @@ public:
     void Kill();
 };
 
+class MaterialPoint : public Entity {
+protected:
+	Uint16 Mass;
+	Point Vel, Acc;
+	set<MaterialPoint*> *Field;
+public:
+	MaterialPoint(const Uint16&, const Uint16&, const Uint16&, set<MaterialPoint*>*);
+
+	bool Living() override;
+};
+
 #endif

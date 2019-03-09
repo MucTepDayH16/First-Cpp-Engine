@@ -1,6 +1,12 @@
 #include "state.h"
 
-Start::Start() : State(), Mouse(new SDL_Point) {}
+Start::Start() 
+: State(), Mouse(nullptr), Field(new set<MaterialPoint*>) {}
+
+double Start::field(const double& t, const double& x, const double& y, const double& z) {
+    double F = 0;
+    return F;
+}
 
 bool Start::Create() {
     State::Create();
@@ -17,18 +23,16 @@ bool Start::Run() {
     return 
         State::Run() &&
         Input::Update() &&
-        Graphic::Update(Input::isKeyPressed(SDLK_SPACE) ? 0x7f : 0xff);
+        Graphic::Update(0xff);
 }
 
 void Start::onKeyDown(const SDL_Keycode& Key) {
     switch (Key) {
     case SDLK_SPACE:
-        Entities->emplace(new Entity("res/M.png", 2, 2, Mouse->x, Mouse->y));
+        Entity* NEW = new MaterialPoint(Mouse->x, Mouse->y, 10, Field);
+        Entities->emplace(NEW);
+        Field->emplace((MaterialPoint*)NEW);
         break;
-
-    case SDLK_n:
-        break;
-
     }
 }
 

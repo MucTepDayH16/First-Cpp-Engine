@@ -28,6 +28,8 @@ class Start : public State,
         Input::QuitListener {
 protected:
     SDL_Point* Mouse;
+    set<MaterialPoint*> *Field;
+    double field(const double&, const double&, const double&, const double&);
 public:
     Start();
 
