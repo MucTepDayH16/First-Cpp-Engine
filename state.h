@@ -25,6 +25,7 @@ public:
 
 class Start : public State,
         Input::KeyListener,
+        Input::MouseListener,
         Input::QuitListener {
 protected:
     SDL_Point* Mouse;
@@ -36,9 +37,11 @@ public:
     bool Create() override;
     bool Run() override;
 
-    void onKeyDown(const SDL_Keycode& Key) override;
+    void onKeyDown(const SDL_Keycode&) override;
     void onKeyUp(const SDL_Keycode&) override;
     void onQuit(const Uint16& code) override;
+    void onMouseDown(const Uint8&) override;
+    void onMouseUp(const Uint8&) override;
 };
 
 #endif

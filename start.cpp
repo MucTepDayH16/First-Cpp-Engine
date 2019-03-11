@@ -12,14 +12,17 @@ bool Start::Create() {
     State::Create();
     Mouse = Input::GetMousePos();
 
-    Input::setOnKeyListener(SDLK_SPACE, this);
-    Input::setOnKeyListener(SDLK_n, this);
+    Input::setOnKeyListener(this);
+    Input::setOnMouseListener(this);
     Input::setOnQuitListener(this);
 
     return true;
 }
 
 bool Start::Run() {
+    if (Input::isKeyPressed(SDLK_RIGHT))
+        (*Input::GetDeltaTimer()) *= 20;
+
     return 
         State::Run() &&
         Input::Update() &&
@@ -29,17 +32,31 @@ bool Start::Run() {
 void Start::onKeyDown(const SDL_Keycode& Key) {
     switch (Key) {
     case SDLK_SPACE:
-        Entity* NEW = new MaterialPoint(Mouse->x, Mouse->y, 10, Field);
+        Entity* NEW = new MaterialPoint(Mouse->x, Mouse->y, 1000, Field);
         Entities->emplace(NEW);
         Field->emplace((MaterialPoint*)NEW);
         break;
     }
 }
 
-void Start::onKeyUp(const SDL_Keycode&) {
+void Start::onKeyUp(const SDL_Keycode& Key) {
     
 }
 
 void Start::onQuit(const Uint16& code) {
     ChangeState(new Quit(code));
+}
+
+void Start::onMouseDown(const Uint8& Button) {
+    switch (Button) {
+    default:
+        Entity* NEW = new MaterialPoint(Mouse->x, Mouse->y, 100, Field);
+        Entities->emplace(NEW);
+        Field->emplace((MaterialPoint*)NEW);
+        break;
+    }
+}
+
+void Start::onMouseUp(const Uint8& Button) {
+    
 }

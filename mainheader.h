@@ -7,9 +7,6 @@
 #include <map>
 #include <iostream>
 
-#define GRAVITY -1000
-#define DIAMETER 10
-
 using namespace std;
 
 enum CODE {

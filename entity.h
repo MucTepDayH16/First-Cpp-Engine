@@ -14,10 +14,8 @@ protected:
     bool Alive;
     Point Pos;
     SDL_Rect* Size;
-
-    SDL_Texture* MainTexture;
 public:
-    Entity(const char*, const Uint16& = 1, const Uint16& = 1, const Uint16& = 0, const Uint16& = 0);
+    Entity(const Uint16& = 1, const Uint16& = 1, const Uint16& = 0, const Uint16& = 0);
 
     virtual bool Living();
 
@@ -26,9 +24,11 @@ public:
 
 class MaterialPoint : public Entity {
 protected:
-	Uint16 Mass;
+	double Mass;
 	Point Vel, Acc;
 	set<MaterialPoint*> *Field;
+
+    static SDL_Texture* MainTexture;
 public:
 	MaterialPoint(const Uint16&, const Uint16&, const Uint16&, set<MaterialPoint*>*);
 
