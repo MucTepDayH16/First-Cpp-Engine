@@ -1,3 +1,4 @@
 # First-Cpp-Engine
 
-SDL require
+Physics engine with SDL. 
+Simulate gravity force and collisions. 
