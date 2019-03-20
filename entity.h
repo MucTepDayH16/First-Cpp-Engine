@@ -32,6 +32,8 @@ protected:
 public:
 	MaterialPoint(const Uint16&, const Uint16&, const Uint16&, set<MaterialPoint*>*);
 
+    void setVelocity(SDL_Point*);
+
 	bool Living() override;
 };
 

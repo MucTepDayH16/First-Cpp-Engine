@@ -30,6 +30,7 @@ public:
     static bool Update();
 
     static Uint8 isKeyPressed(const SDL_Keycode&);
+    static Uint8 isMousePressed(const Uint8&);
     static SDL_Point* GetMousePos();
 
     static Uint64* GetTimer();

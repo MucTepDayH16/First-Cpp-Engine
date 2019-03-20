@@ -35,12 +35,17 @@ SDL_Texture* Graphic::LoadTexture(const char* path) {
     return SDL_CreateTextureFromSurface(Rend, IMG_LoadPNG_RW(SDL_RWFromFile(path, "rb")));
 }
 
-bool Graphic::DrawTexture(SDL_Rect* pos, SDL_Texture* text) {
+bool Graphic::DrawTexture(SDL_Rect *pos, SDL_Texture *text) {
     return SDL_RenderCopy(Rend, text, nullptr, pos) == 0;
 }
 
-bool Graphic::DrawRect(SDL_Rect* pos) {
+bool Graphic::DrawRect(SDL_Rect *pos) {
     return SDL_RenderFillRect(Rend, pos) == 0;
+}
+
+bool Graphic::DrawLine(SDL_Point *first, SDL_Point *second) {
+    SDL_SetRenderDrawColor(Rend, 0xff, 0x00, 0x00, 0x00);
+    return SDL_RenderDrawLine(Rend, first->x, first->y, second->x, second->y) == 0;
 }
 
 bool Graphic::Update() {
@@ -53,6 +58,12 @@ bool Graphic::Update(const Uint8& g) {
     SDL_RenderPresent(Rend);
 
     SDL_SetRenderDrawColor(Rend, g, g, g, 0x00);
+    return SDL_RenderClear(Rend) == 0;
+}
+
+bool Graphic::Update(SDL_Texture *Text) {
+    SDL_RenderCopy(Rend, Text, nullptr, nullptr);
+    SDL_RenderPresent(Rend);
     return SDL_RenderClear(Rend) == 0;
 }
 

@@ -21,23 +21,39 @@ void Entity::Kill() {
 SDL_Texture* MaterialPoint::MainTexture(nullptr);
 
 MaterialPoint::MaterialPoint(const Uint16& X, const Uint16& Y, const Uint16& M, set<MaterialPoint*>* field) 
-: Entity(20, 20, X, Y), Mass(M), Vel(0, 0), Acc(0, 0), Field(field) {
+: Entity(Const::Diameter, Const::Diameter, X, Y), Mass(M), Vel(0, 0), Acc(0, 0), Field(field) {
 	if (MainTexture == nullptr)
 		MainTexture = Graphic::LoadTexture("res/M.png");
+	Acc.x = 0.; Acc.y = 1.;
 }
 
 bool MaterialPoint::Living() {
 	static Sint64* Delta = Input::GetDeltaTimer();
 
-	Acc.x = 0.; Acc.y = 0.;
+	if (Pos.x <= 0 || Pos.x >= Graphic::WIDTH) {
+		while (Pos.x <= 0)
+			Pos.x += .1;
+		while (Pos.x >= Graphic::WIDTH)
+			Pos.x -= .1;
+		Vel.x *= -.95;
+	}
+
+	if (Pos.y <= 0 || Pos.y >= Graphic::HEIGHT) {
+		while (Pos.y <= 0)
+			Pos.y += .1;
+		while (Pos.y >= Graphic::HEIGHT)
+			Pos.y -= .1;
+		Vel.y *= -.95;
+	}
+
 	for (MaterialPoint *M : *Field) {
 		if (this == M)
 			continue;
 
 		double D = sqrt(.01 + (Pos.x - M->Pos.x) * (Pos.x - M->Pos.x) + (Pos.y - M->Pos.y) * (Pos.y - M->Pos.y));
 		Point N((Pos.x - M->Pos.x) / D, (Pos.y - M->Pos.y) / D);
-		if (D <= 20) {
-			while (400 >= .01 + (Pos.x - M->Pos.x) * (Pos.x - M->Pos.x) + (Pos.y - M->Pos.y) * (Pos.y - M->Pos.y)) {
+		if (D <= Const::Diameter) {
+			while (Const::Diameter * Const::Diameter >= .01 + (Pos.x - M->Pos.x) * (Pos.x - M->Pos.x) + (Pos.y - M->Pos.y) * (Pos.y - M->Pos.y)) {
 				Pos.x += 		.05 * N.x;
 				Pos.y += 		.05 * N.y;
 				M->Pos.x -= 	.05 * N.x;
@@ -51,11 +67,6 @@ bool MaterialPoint::Living() {
 			M->Vel.x += 	Mass 	* Pr * N.x;
 			M->Vel.y +=		Mass 	* Pr * N.y;
 		}
-
-		double K = (-100) * M->Mass / (D * D);
-
-		Acc.x += K * N.x;
-		Acc.y += K * N.y;
 	}
 
 	Pos.x += Vel.x * double(*Delta) / 1000.;
@@ -66,4 +77,9 @@ bool MaterialPoint::Living() {
 
 	Graphic::DrawTexture(Size, MainTexture);
 	return Entity::Living();
+}
+
+void MaterialPoint::setVelocity(SDL_Point *vel) {
+	Vel.x = vel->x;
+	Vel.y = vel->y;
 }

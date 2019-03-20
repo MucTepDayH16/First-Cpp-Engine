@@ -5,10 +5,10 @@
 
 class Graphic {
 protected:
-    static Uint16 WIDTH, HEIGHT;
     static SDL_Window* Win;
     static SDL_Renderer* Rend;
 public:
+    static Uint16 WIDTH, HEIGHT;
     struct Color {
         Uint8 r, g, b, a;
         Color(
@@ -26,9 +26,11 @@ public:
     static SDL_Texture* LoadTexture(const char*);
     static bool DrawTexture(SDL_Rect*, SDL_Texture*);
     static bool DrawRect(SDL_Rect*);
+    static bool DrawLine(SDL_Point*, SDL_Point*);
 
     static bool Update();
     static bool Update(const Uint8&);
+    static bool Update(SDL_Texture*);
     static bool Update(const Uint8&, const Uint8&, const Uint8&);
 
     static bool KillGraphic();

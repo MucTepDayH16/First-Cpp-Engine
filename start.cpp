@@ -1,7 +1,7 @@
 #include "state.h"
 
 Start::Start() 
-: State(), Mouse(nullptr), Field(new set<MaterialPoint*>) {}
+: State(), New(nullptr), Mouse0(new SDL_Point), Mouse(nullptr), Field(new set<MaterialPoint*>) {}
 
 double Start::field(const double& t, const double& x, const double& y, const double& z) {
     double F = 0;
@@ -23,6 +23,9 @@ bool Start::Run() {
     if (Input::isKeyPressed(SDLK_RIGHT))
         (*Input::GetDeltaTimer()) *= 20;
 
+    if (Input::isMousePressed(SDL_BUTTON_LEFT))
+        Graphic::DrawLine(Mouse, Mouse0);
+
     return 
         State::Run() &&
         Input::Update() &&
@@ -31,11 +34,14 @@ bool Start::Run() {
 
 void Start::onKeyDown(const SDL_Keycode& Key) {
     switch (Key) {
-    case SDLK_SPACE:
-        Entity* NEW = new MaterialPoint(Mouse->x, Mouse->y, 1000, Field);
+    case SDLK_SPACE: {
+        MaterialPoint* NEW = new MaterialPoint(Mouse->x, Mouse->y, Const::HeavyMass, Field);
         Entities->emplace(NEW);
-        Field->emplace((MaterialPoint*)NEW);
-        break;
+        Field->emplace(NEW);
+        break; }
+    case SDLK_n: {
+        cerr << Entities->size() << endl;
+        break; }
     }
 }
 
@@ -49,14 +55,22 @@ void Start::onQuit(const Uint16& code) {
 
 void Start::onMouseDown(const Uint8& Button) {
     switch (Button) {
-    default:
-        Entity* NEW = new MaterialPoint(Mouse->x, Mouse->y, 100, Field);
-        Entities->emplace(NEW);
-        Field->emplace((MaterialPoint*)NEW);
+    case SDL_BUTTON_LEFT:
+        New = new MaterialPoint(Mouse->x, Mouse->y, Const::LightMass, Field);
+        Mouse0->x = Mouse->x;
+        Mouse0->y = Mouse->y;
         break;
     }
 }
 
 void Start::onMouseUp(const Uint8& Button) {
-    
+    switch (Button) {
+    case SDL_BUTTON_LEFT:
+        Mouse0->x = -(2) * (Mouse0->x - Mouse->x);
+        Mouse0->y = -(2) * (Mouse0->y - Mouse->y);
+        New->setVelocity(Mouse0);
+        Entities->emplace(New);
+        Field->emplace(New);
+        break;
+    }
 }

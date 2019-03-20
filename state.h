@@ -28,7 +28,9 @@ class Start : public State,
         Input::MouseListener,
         Input::QuitListener {
 protected:
-    SDL_Point* Mouse;
+    MaterialPoint *New;
+    SDL_Point *Mouse0;
+    SDL_Point *Mouse;
     set<MaterialPoint*> *Field;
     double field(const double&, const double&, const double&, const double&);
 public:

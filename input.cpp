@@ -84,6 +84,10 @@ Uint8 Input::isKeyPressed(const SDL_Keycode& Key) {
   return Uint8(KeyMap->count(Key));
 }
 
+Uint8 Input::isMousePressed(const Uint8& Button) {
+  return Uint8(MouseButtons->count(Button));
+}
+
 SDL_Point* Input::GetMousePos() {
   return MousePos;
 }

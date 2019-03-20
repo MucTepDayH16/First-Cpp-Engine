@@ -1,12 +1,12 @@
 SDL=`sdl2-config --cflags --libs` -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
+LUA=-I/usr/local/include -L/usr/local/lib -llua -ldl
 GCC=g++
 FLAGS=-c -Wall -fopenmp
 NAME=Simulator
 G=git
 
-all: graphic.o input.o input_listener.o entity.o state.o start.o execute.o main.o
-	$(GCC) main.o execute.o state.o start.o graphic.o input.o input_listener.o entity.o -o $(NAME) $(SDL)
-	rm -f *.o *.gch
+all: const.o graphic.o input.o input_listener.o entity.o state.o start.o execute.o main.o
+	$(GCC) main.o execute.o state.o start.o const.o graphic.o input.o input_listener.o entity.o -o $(NAME) $(SDL) $(LUA)
 
 main.o: mainheader.h main.cpp
 	$(GCC) $(FLAGS) mainheader.h main.cpp
@@ -28,6 +28,9 @@ input.o: input.h input.cpp
 
 input_listener.o: input_listener.cpp
 	$(GCC) $(FLAGS) input_listener.cpp $(SDL)
+
+const.o: const.h const.cpp
+	$(GCC) $(FLAGS) const.h const.cpp $(LUA)
 
 entity.o: entity.h entity.cpp
 	$(GCC) $(FLAGS) entity.h entity.cpp
