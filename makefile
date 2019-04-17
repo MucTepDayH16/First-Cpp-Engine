@@ -1,5 +1,5 @@
 SDL=`sdl2-config --cflags --libs` -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
-LUA=-I/usr/local/include -L/usr/local/lib -llua -ldl
+LUA=
 GCC=g++
 FLAGS=-c -Wall -fopenmp
 NAME=Simulator

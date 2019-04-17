@@ -1,8 +1,6 @@
-#include <lua5.3/lua.hpp>
 
 class Const {
 protected:
-	static lua_State *State;
 public:
 	static double Gravity;
 	static double Diameter;
